@@ -6,35 +6,48 @@ from skimage.filters import gaussian
 from skimage.segmentation import active_contour
 from skimage import io as skio
 
+
+# ============================================================
+# Chemins
+# ============================================================
+
 output_dir = "/Users/erwan/kDrive/Master/TADI/TP-DeformableModels/images"
-im = skio.imread("coeurIRM.bmp")
+
+# Image prévue dans le code de base pour la SECTION 3b
+im = skio.imread("retineOA.bmp")
+
 
 # ============================================================
-# Initialisation commune
+# Initialisation identique au code de base
 # ============================================================
 
-s = np.linspace(0, 2 * np.pi, 100)
-r = 140 + 25 * np.sin(s)
-c = 130 + 25 * np.cos(s)
+r = np.linspace(20, 80, 100)
+c = np.linspace(20, 100, 100)
 init = np.array([r, c]).T
 
 
 # ============================================================
-# Valeurs de référence
+# Valeurs de référence identiques au code de base
 # ============================================================
 
-default_params = {"sigma": 0.1, "alpha": 0.1, "beta": 150, "w_edge": 50, "gamma": 0.001}
+default_params = {
+    "sigma": 1,
+    "alpha": 0.01,
+    "beta": 2,
+    "w_line": 0,
+    "w_edge": 10,
+    "gamma": 0.01,
+}
 
 
 # ============================================================
 # Fonction de test
 # ============================================================
 
-
 def test_parameter(im, parameter_name, values, output_dir=None, params=default_params):
     """
     Teste plusieurs valeurs d'un paramètre de active_contour
-    en gardant tous les autres paramètres constants.
+    en gardant tous les autres paramètres à leur valeur de référence.
 
     parameter_name :
         "sigma", "alpha", "beta", "w_edge" ou "gamma"
@@ -66,6 +79,7 @@ def test_parameter(im, parameter_name, values, output_dir=None, params=default_p
             boundary_condition="fixed",
             alpha=p["alpha"],
             beta=p["beta"],
+            w_line=p["w_line"],
             w_edge=p["w_edge"],
             gamma=p["gamma"],
         )
@@ -74,19 +88,39 @@ def test_parameter(im, parameter_name, values, output_dir=None, params=default_p
         ax.imshow(im, cmap=plt.cm.gray)
 
         # Contour initial
-        ax.plot(init[:, 1], init[:, 0], "--r", lw=2, label="Initial")
+        ax.plot(
+            init[:, 1],
+            init[:, 0],
+            "--r",
+            lw=2,
+            label="Initial"
+        )
 
         # Contour final
-        ax.plot(snake[:, 1], snake[:, 0], "-b", lw=2, label="Final")
+        ax.plot(
+            snake[:, 1],
+            snake[:, 0],
+            "-b",
+            lw=2,
+            label="Final"
+        )
 
         ax.set_title(f"{parameter_name} = {value}")
 
         ax.set_xticks([])
         ax.set_yticks([])
 
-        ax.axis([0, im.shape[1], im.shape[0], 0])
+        ax.axis([
+            0,
+            im.shape[1],
+            im.shape[0],
+            0
+        ])
 
-    fig.suptitle(f"Influence du paramètre {parameter_name}", fontsize=16)
+    fig.suptitle(
+        f"Influence du paramètre {parameter_name}",
+        fontsize=16
+    )
 
     fig.tight_layout()
 
@@ -95,21 +129,61 @@ def test_parameter(im, parameter_name, values, output_dir=None, params=default_p
 
         os.makedirs(output_dir, exist_ok=True)
 
-        output_path = os.path.join(output_dir, f"test_{parameter_name}_ouvert.png")
+        output_path = os.path.join(
+            output_dir,
+            f"test_{parameter_name}_ouvert.png"
+        )
 
-        fig.savefig(output_path, dpi=300, bbox_inches="tight", pad_inches=0.1)
+        fig.savefig(
+            output_path,
+            dpi=300,
+            bbox_inches="tight",
+            pad_inches=0.1
+        )
 
         print("Image sauvegardée :", output_path)
 
     # plt.show()
 
 
-test_parameter(im, "alpha", [0.001, 0.1, 1, 10], output_dir)
+# ============================================================
+# Tests
+# Un seul paramètre varie à la fois.
+# Les autres restent aux valeurs du code de base :
+# sigma=1, alpha=0.01, beta=2, w_line=0, w_edge=10, gamma=0.01
+# ============================================================
 
-test_parameter(im, "beta", [0.1, 10, 150, 500], output_dir)
+test_parameter(
+    im,
+    "alpha",
+    [0.001, 0.01, 0.1, 1],
+    output_dir
+)
 
-test_parameter(im, "w_edge", [0, 1, 50, 100], output_dir)
+test_parameter(
+    im,
+    "beta",
+    [0.1, 2, 10, 100],
+    output_dir
+)
 
-test_parameter(im, "gamma", [0.0001, 0.001, 0.01, 1], output_dir)
+test_parameter(
+    im,
+    "w_edge",
+    [0, 1, 10, 50],
+    output_dir
+)
 
-test_parameter(im, "sigma", [0.01, 0.1, 1, 5], output_dir)
+test_parameter(
+    im,
+    "gamma",
+    [0.001, 0.01, 0.1, 1],
+    output_dir
+)
+
+test_parameter(
+    im,
+    "sigma",
+    [0.1, 1, 2, 5],
+    output_dir
+)
