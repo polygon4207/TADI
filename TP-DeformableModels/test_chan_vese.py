@@ -1,10 +1,9 @@
 import os
-import matplotlib.pyplot as plt
 
-from skimage import io as skio
+import matplotlib.pyplot as plt
 from skimage import img_as_float
-from skimage.segmentation import chan_vese
-from skimage.segmentation import disk_level_set
+from skimage import io as skio
+from skimage.segmentation import chan_vese, disk_level_set
 
 output_dir = "/Users/erwan/kDrive/Master/TADI/TP-DeformableModels/images"
 

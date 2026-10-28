@@ -4,19 +4,15 @@
 
 # %% SECTION 1 inclusion of packages
 
-
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy import ndimage as ndi
-
 # necessite scikit-image
+from skimage import img_as_float
 from skimage import io as skio
 from skimage.filters import gaussian
-from skimage.segmentation import active_contour
-from skimage import img_as_float
-from skimage.segmentation import chan_vese
-from skimage.segmentation import checkerboard_level_set
-from skimage.segmentation import disk_level_set
+from skimage.segmentation import (active_contour, chan_vese,
+                                  checkerboard_level_set, disk_level_set)
 
 # %% SECTION 2 - Input image
 

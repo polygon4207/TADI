@@ -1,10 +1,10 @@
 import os
-import numpy as np
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+import numpy as np
+from skimage import io as skio
 from skimage.filters import gaussian
 from skimage.segmentation import active_contour
-from skimage import io as skio
 
 output_dir = "/Users/erwan/kDrive/Master/TADI/TP-DeformableModels/images"
 im = skio.imread("coeurIRM.bmp")
