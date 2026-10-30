@@ -152,37 +152,44 @@ def test_parameter(im, parameter_name, values, output_dir=None, params=default_p
 # sigma=1, alpha=0.01, beta=2, w_line=0, w_edge=10, gamma=0.01
 # ============================================================
 
-test_parameter(
-    im,
-    "alpha",
-    [0.001, 0.01, 0.1, 1],
-    output_dir
-)
+# test_parameter(
+#     im,
+#     "alpha",
+#     [0.001, 0.01, 0.1, 1],
+#     output_dir
+# )
+
+# test_parameter(
+#     im,
+#     "beta",
+#     [0.1, 2, 10, 100],
+#     output_dir
+# )
+
+# test_parameter(
+#     im,
+#     "w_edge",
+#     [0, 1, 10, 50],
+#     output_dir
+# )
+
+# test_parameter(
+#     im,
+#     "gamma",
+#     [0.001, 0.01, 0.1, 1],
+#     output_dir
+# )
+
+# test_parameter(
+#     im,
+#     "sigma",
+#     [0.1, 1, 2, 5],
+#     output_dir
+# )
 
 test_parameter(
     im,
-    "beta",
-    [0.1, 2, 10, 100],
-    output_dir
-)
-
-test_parameter(
-    im,
-    "w_edge",
-    [0, 1, 10, 50],
-    output_dir
-)
-
-test_parameter(
-    im,
-    "gamma",
-    [0.001, 0.01, 0.1, 1],
-    output_dir
-)
-
-test_parameter(
-    im,
-    "sigma",
-    [0.1, 1, 2, 5],
+    "w_line",
+    [-10, -1, 0, 10],
     output_dir
 )
